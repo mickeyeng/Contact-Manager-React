@@ -5,8 +5,6 @@ import Header from "./components/header";
 
 class App extends Component {
   render() {
-    let showHello = true;
-
     return (
       <div className="App">
         <Header branding="Contact Manager" />
