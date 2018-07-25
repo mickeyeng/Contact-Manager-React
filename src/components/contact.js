@@ -6,11 +6,11 @@ class Contact extends React.Component {
     // DESTRUCTURING
     const { name, email, phone } = this.props;
     return (
-      <div>
+      <div className="card card-body mb-3">
         <h4>{name}</h4>
-        <ul>
-          <li>Email: {email}</li>
-          <li>Phone No: {phone}</li>
+        <ul className="list-group">
+          <li className="list-group-item">Email: {email}</li>
+          <li className="list-group-item">Phone No: {phone}</li>
         </ul>
       </div>
     );
@@ -20,7 +20,7 @@ class Contact extends React.Component {
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  phone: propTypes.string.isRequired
+  phone: PropTypes.string.isRequired
 };
 
 export default Contact;
