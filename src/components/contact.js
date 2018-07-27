@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Consumer } from "../context";
 
 class Contact extends React.Component {
   state = {
@@ -12,44 +13,50 @@ class Contact extends React.Component {
     });
   };
 
-  onDeleteClick = () => {
+  onDeleteClick = (id, dispatch) => {
     console.log("clicked");
-    this.props.deleteClickHandler();
+    dispatch({ type: "DELETE_CONTACT", payload: id });
   };
 
   render() {
     // DESTRUCTURING
-    const { contact } = this.props;
+    const { name, email, phone, id } = this.props.contact;
     const { showContactInfo } = this.state;
     return (
-      <div className="card card-body mb-3">
-        <h4>
-          {contact.name}{" "}
-          <i
-            style={{ cursor: "pointer" }}
-            onClick={this.onShowClick}
-            className="fas fa-sort-down"
-          />
-          <i
-            className="fas fa-times float-right"
-            style={{ cursor: "pointer", color: "red" }}
-            onClick={this.onDeleteClick}
-          />
-        </h4>
-        {showContactInfo ? (
-          <ul className="list-group">
-            <li className="list-group-item">Email: {contact.email}</li>
-            <li className="list-group-item">Phone No: {contact.phone}</li>
-          </ul>
-        ) : null}
-      </div>
+      <Consumer>
+        {value => {
+          const { dispatch } = value;
+          return (
+            <div className="card card-body mb-3">
+              <h4>
+                {name}{" "}
+                <i
+                  style={{ cursor: "pointer" }}
+                  onClick={this.onShowClick}
+                  className="fas fa-sort-down"
+                />
+                <i
+                  className="fas fa-times float-right"
+                  style={{ cursor: "pointer", color: "red" }}
+                  onClick={this.onDeleteClick.bind(this, id, dispatch)}
+                />
+              </h4>
+              {showContactInfo ? (
+                <ul className="list-group">
+                  <li className="list-group-item">Email: {email}</li>
+                  <li className="list-group-item">Phone No: {phone}</li>
+                </ul>
+              ) : null}
+            </div>
+          );
+        }}
+      </Consumer>
     );
   }
 }
 
 Contact.propTypes = {
-  contact: PropTypes.object.isRequired,
-  deleteClickHandler: PropTypes.func.isRequired
+  contact: PropTypes.object.isRequired
 };
 
 export default Contact;
