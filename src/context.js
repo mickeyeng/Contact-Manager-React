@@ -6,10 +6,19 @@ const reducer = (state, action) => {
     // IF THE TYPE IS DELETE CONTACT RETURN THE FOLLOWING
     case "DELETE_CONTACT":
       return {
+        // copy of the state
         ...state,
         contacts: state.contacts.filter(
           contact => contact.id !== action.payload
         )
+      };
+
+    case "ADD_CONTACT":
+      return {
+        // copy of the state
+        ...state,
+        // add on the new contact with action.payload
+        contacts: [action.payload, ...state.contacts]
       };
     default:
       return state;
