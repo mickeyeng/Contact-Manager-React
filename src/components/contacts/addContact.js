@@ -7,7 +7,8 @@ class AddContact extends React.Component {
   state = {
     name: "",
     email: "",
-    phone: ""
+    phone: "",
+    errors: {}
   };
 
   onChange = e => {
@@ -20,6 +21,31 @@ class AddContact extends React.Component {
   onSubmit = (dispatch, e) => {
     const { name, email, phone } = this.state;
     e.preventDefault();
+
+    // check for errors
+    if (name === "") {
+      this.setState({
+        errors: {
+          name: "Name is required"
+        }
+      });
+    }
+
+    if (email === "") {
+      this.setState({
+        errors: {
+          name: "Email address is required"
+        }
+      });
+    }
+
+    if (phone === "") {
+      this.setState({
+        errors: {
+          phone: "Phone number is required"
+        }
+      });
+    }
 
     const newContact = {
       // library to generate random id
@@ -34,12 +60,13 @@ class AddContact extends React.Component {
     this.setState({
       name: "",
       email: "",
-      phone: ""
+      phone: "",
+      errors: {}
     });
   };
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone, errors } = this.state;
     return (
       <Consumer>
         {value => {
@@ -55,6 +82,7 @@ class AddContact extends React.Component {
                     placeholder="Enter a name..."
                     value={name}
                     onChange={this.onChange}
+                    error={errors.name}
                   />
                   <TextInputGroup
                     label="Email"
@@ -63,6 +91,7 @@ class AddContact extends React.Component {
                     value={email}
                     onChange={this.onChange}
                     type="email"
+                    error={errors.email}
                   />
                   <TextInputGroup
                     label="Phone No"
@@ -70,6 +99,7 @@ class AddContact extends React.Component {
                     placeholder="Enter a Phone..."
                     value={phone}
                     onChange={this.onChange}
+                    error={errors.phone}
                   />
                   <input
                     type="submit"
