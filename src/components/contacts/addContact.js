@@ -29,14 +29,16 @@ class AddContact extends React.Component {
           name: "Name is required"
         }
       });
+      return;
     }
 
     if (email === "") {
       this.setState({
         errors: {
-          name: "Email address is required"
+          email: "Email address is required"
         }
       });
+      return;
     }
 
     if (phone === "") {
@@ -45,6 +47,7 @@ class AddContact extends React.Component {
           phone: "Phone number is required"
         }
       });
+      return;
     }
 
     const newContact = {
@@ -86,7 +89,7 @@ class AddContact extends React.Component {
                   />
                   <TextInputGroup
                     label="Email"
-                    name="name"
+                    name="email"
                     placeholder="Enter a email..."
                     value={email}
                     onChange={this.onChange}
