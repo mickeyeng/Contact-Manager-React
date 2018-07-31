@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 const Context = React.createContext();
 
 const reducer = (state, action) => {
@@ -26,27 +27,48 @@ const reducer = (state, action) => {
 };
 
 export class Provider extends React.Component {
+  componentDidMount() {
+    this.getContacts();
+  }
+
+  getContacts = () => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then(response =>
+        this.setState({
+          contacts: response.data
+        })
+      )
+
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
   state = {
-    contacts: [
-      {
-        id: 1,
-        name: "John Doe",
-        email: "jdoe@gmail.com",
-        phone: "55555-5555-555"
-      },
-      {
-        id: 2,
-        name: "Bob Jones",
-        email: "bobJones@gmail.com",
-        phone: "55545-54455-555"
-      },
-      {
-        id: 3,
-        name: "Lauren Carter",
-        email: "laurenCarter@gmail.com",
-        phone: "544545-54455-555"
-      }
-    ],
+    // contacts: [
+    //   {
+    //     id: 1,
+    //     name: "John Doe",
+    //     email: "jdoe@gmail.com",
+    //     phone: "55555-5555-555"
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "Bob Jones",
+    //     email: "bobJones@gmail.com",
+    //     phone: "55545-54455-555"
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "Lauren Carter",
+    //     email: "laurenCarter@gmail.com",
+    //     phone: "544545-54455-555"
+    //   }
+    // ],
+
+    contacts: [],
+
     dispatch: action => {
       this.setState(state => reducer(state, action));
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { Consumer } from "../../context";
 import uuid from "uuid";
 import TextInputGroup from "../layout/textInputGroup";
+import axios from "axios";
 
 class AddContact extends React.Component {
   state = {
@@ -58,7 +59,12 @@ class AddContact extends React.Component {
       phone
     };
 
-    dispatch({ type: "ADD_CONTACT", payload: newContact });
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", newContact)
+      .then(response =>
+        dispatch({ type: "ADD_CONTACT", payload: response.data })
+      );
+
     // clear state
     this.setState({
       name: "",
@@ -66,6 +72,7 @@ class AddContact extends React.Component {
       phone: "",
       errors: {}
     });
+    this.props.history.push("/");
   };
 
   render() {
@@ -98,7 +105,7 @@ class AddContact extends React.Component {
                   />
                   <TextInputGroup
                     label="Phone No"
-                    name="name"
+                    name="phone"
                     placeholder="Enter a Phone..."
                     value={phone}
                     onChange={this.onChange}
