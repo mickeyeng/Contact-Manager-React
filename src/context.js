@@ -33,7 +33,7 @@ export class Provider extends React.Component {
 
   getContacts = () => {
     axios
-      .get("https://jsonplaceholder.typicode.com/users")
+      .get("http://localhost:3000/api/v1/contacts")
       .then(response =>
         this.setState({
           contacts: response.data

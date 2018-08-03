@@ -53,14 +53,14 @@ class AddContact extends React.Component {
 
     const newContact = {
       // library to generate random id
-      id: uuid(),
+      // id: uuid(),
       name,
       email,
       phone
     };
 
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", newContact)
+      .post("http://localhost:3000/api/v1/contacts", newContact)
       .then(response =>
         dispatch({ type: "ADD_CONTACT", payload: response.data })
       );

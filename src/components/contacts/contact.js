@@ -18,7 +18,7 @@ class Contact extends React.Component {
     console.log("clicked");
 
     axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .delete(`http://localhost:3000/api/v1/contacts/${id}`)
       .then(response => dispatch({ type: "DELETE_CONTACT", payload: id }));
   };
 
